@@ -1,0 +1,9 @@
+{
+  "INDEX_TITLE": "Projects",
+  "RESPAWN_STARTS_IN": "Respawn in <strong>{startsIn}</strong>",
+  "RESPAWN_DURATION": "Respawn lasts <strong>{respawnDuration}</strong>",
+  "UPDATE_LABLE": "Update",
+  "WIDGET_TITLE": "<strong>{title}</strong> updated {date}",
+  "SERVER_LABLE": "Server: ",
+  "LANGUAGE_LABLE": "Language"
+}

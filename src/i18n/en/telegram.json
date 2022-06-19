@@ -1,0 +1,24 @@
+{
+  "BOT_WELCOME": "<strong>Asterios RB Bot</strong>\n\nto start to work with a bot, select appropriate command from a menu. Bot can show the time when RB was killed and approx. time when RB will respawn",
+  "CHOOSE_SERVER_FOR_PROJECT": "<strong>Respawn tracker</strong>\n\nHere you can check respawn time for the specific RB\n To check time choose a server",
+  "NO_RESULTS_FOR_SERVER": "Cannot find raid bosses for <strong>{server}</strong>",
+  "CLOSE": "⤴️ Close",
+  "BACK": "↩️ Back",
+  "SHOW_SUBSCRIPTIONS": "Show",
+  "MODIFY_SUBSCRIPTIONS": "Edit",
+  "NO_SUBSCRIPTIONS": "You dont have any subscriptions",
+  "SUBSCRIPTIONS": "<strong> Subscriptions </strong> \n\n In this section, you can view or change subscriptions to raid bosses",
+  "SETTINGS": "<strong>Settings</strong>\n\n Language: {lang}",
+  "COMMAND_RESPAWN": "Respawn",
+  "COMMAND_SUBSCRIPTIONS": "Subscriptions",
+  "COMMAND_DONATE": "Donate",
+  "COMMAND_SETTINGS": "Settings",
+  "BOSS_WAS_KILLED": "‼️ {server}\n\n<strong>{raidBoss}</strong> was killed",
+  "BOT_RESPAWN_STARTS_IN": "💤 {raidBoss} - respawn in <strong>{startsIn}</strong>",
+  "BOT_RESPAWN_DURATION": "⏳ {raidBoss} - respawn lasts <strong>{respawnDuration}</strong>",
+  "BOSS_WILL_SPAWN_IN": {
+    "one": "‼️ {server}\n\n<strong>{raidBoss}</strong> will spawn during next hour",
+    "other": "‼️ {server}\n\n<strong>{raidBoss}</strong> will spawn during next {count} hours",
+    "zero": "Never"
+  }
+}

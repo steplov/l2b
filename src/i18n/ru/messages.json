@@ -1,0 +1,9 @@
+{
+  "INDEX_TITLE": "Проекты",
+  "RESPAWN_STARTS_IN": "Респаун через <strong>{startsIn}</strong>",
+  "RESPAWN_DURATION": "Респаун идет <strong>{respawnDuration}</strong>",
+  "UPDATE_LABLE": "Обновить",
+  "WIDGET_TITLE": "<strong>{title}</strong> обновлено {date}",
+  "SERVER_LABLE": "Сервер: ",
+  "LANGUAGE_LABLE": "Язык"
+}

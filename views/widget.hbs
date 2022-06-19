@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="30">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lineage 2 RB :: Widget</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GPZ4507WNL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-GPZ4507WNL');
+    </script>
+    <style>
+      :root {
+        --line-height: 18px;
+        --font-size: 12px;
+    
+        --color_1: #34393e;
+        --color_2: #fff;
+        --color_7: rgb(191,191,191);
+        --color_11: rgb(255,255,255);
+        --color_33: rgb(210,45,251);
+        --color_34: rgb(251, 45, 62);
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+        background-color: var(--color_1);
+        font-size: var(--font-size);
+        color: var(--color_11);
+      }
+
+      .widget {
+        max-width: 400px;
+        margin: 20px auto;
+        border: 1px solid var(--color_7);
+        border-radius: 5px;
+        padding: 10px;
+      }
+
+      .server {
+        padding: 0;
+        text-align: right;
+      }
+
+      table {
+        margin-top: 10px;
+        width: 100%;
+        table-layout: auto;
+        border-collapse: collapse;
+      }
+
+      th {
+        color: var(--color_33);
+        font-weight: 400;
+        font-size: 14px;
+        padding: 10px;
+        line-height: 30px;
+      }
+
+      td {
+        padding-top: 4px;
+        padding-left: 10px;
+        font-size: var(--font-size);
+        line-height: var(--line-height);
+        text-align: left;
+      }
+
+      .refresh {
+        display: block;
+        background-color: var(--color_33);
+        border: none;
+        color: var(--color_2);
+        padding: 5px 30px;
+        text-align: center;
+        text-decoration: none;
+        font-size: var(--font-size);
+        margin: 10px auto 0;
+      }
+
+      .error {
+        color: var(--color_34)
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="widget">
+      {{#if error}}
+      <div class="error">{{error}}</div>
+      {{else}}
+        <div class="server">
+          <span>{{languageLable}}</span>
+          <select id="lang">
+            {{#each languages}}
+              <option
+                value="{{this.value}}"
+                {{#compare this.value "===" ../language }}
+                  selected
+                {{/compare}}
+              >{{this.title}}</option>
+            {{/each}}
+          </select>
+          <span>{{serverLable}}</span>
+          <select id="server">
+            {{#each servers}}
+              <option
+                value="{{this.value}}"
+                {{#compare this.value "===" ../server.value }}
+                  selected
+                {{/compare}}
+              >{{this.title}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th colspan="2">
+                {{{title}}}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each raidBosses}}
+              <tr>
+                <td>{{this.title}}</td>
+                <td>
+                  {{#if this.startsIn}}
+                    {{{this.startsIn}}}
+                  {{/if}}
+                  {{#if this.respawnDuration}}
+                    {{{this.respawnDuration}}}
+                  {{/if}}
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+        <button class="refresh" onclick="window.location.reload();">{{updateLable}}</button>
+        <script>
+          const server = document.getElementById('server');
+          const lang = document.getElementById('lang');
+          const cb = (param) => (event) => {
+            const searchParams = new URLSearchParams(document.location.search);
+            searchParams.set(param, event.target.value);
+            document.location.search = searchParams.toString();
+          }
+          server.addEventListener('change', cb('server'));
+          lang.addEventListener('change', cb('lang'));
+        </script>
+
+      {{/if}}
+    </div>
+  </body>
+</html>
