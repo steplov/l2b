@@ -1,4 +1,5 @@
-import { AggregateRoot } from '@nestjs/cqrs';
+import { EventBus } from '@nestjs/cqrs';
+import { Aggregate } from '@shared/domain/base-classes/aggregate';
 import { TelegramUserEntity } from './telegram-user.entity';
 import { UserCreated } from '../events/user-created/user-created.event';
 import { UserSubscribedOnRaidBoss } from '../events/user-subscribed-on-raid-boss/user-subscribed-on-raid-boss.event';
@@ -6,23 +7,24 @@ import { UserUnsubscribedFromRaidBoss } from '../events/unsubscribe-from-raid-bo
 import { UserSettingsUpdated } from '../events/user-settings-updated/user-settings-updated.event';
 
 export interface TelegramUserAggregateProps {
-  firstName: string;
-  lastName: string;
-  username: string;
-  languageCode: string;
-  subscriptions: string[];
+  languageCode?: string;
+  subscriptions?: string[];
 }
 
-export class TelegramUserAggregate extends AggregateRoot {
+export class TelegramUserAggregate extends Aggregate {
   user: TelegramUserEntity;
 
-  constructor(props: TelegramUserAggregateProps, public readonly id: string) {
-    super();
+  constructor(
+    eventBus: EventBus,
+    props: TelegramUserAggregateProps,
+    public readonly id: string,
+  ) {
+    super(eventBus);
 
     this.user = new TelegramUserEntity(
       {
-        languageCode: props.languageCode,
-        subscriptions: props.subscriptions,
+        languageCode: props.languageCode || 'en',
+        subscriptions: props.subscriptions || [],
       },
       id,
     );

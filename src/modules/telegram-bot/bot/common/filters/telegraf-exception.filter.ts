@@ -9,6 +9,6 @@ export class TelegrafExceptionFilter implements ExceptionFilter {
     const ctx = telegrafHost.getContext<Context>();
 
     await ctx.replyWithHTML(`<strong>Error</strong>: ${exception.message}`);
-    console.error(exception)
+    console.error(exception);
   }
 }

@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { EventSourcingModule } from '@shared/libs/eventsourcing';
 import { AsteriosServerModule } from '@modules/asterios-server/asterios-server.module';
 import {
   RaidBossRepository,
@@ -16,12 +15,9 @@ import { GetRaidBossHandler } from './app/queries/get-raid-boss/get-raid-boss.ha
 import { GetRaidBossesHandler } from './app/queries/get-raid-bosses/get-raid-bosses.handler';
 import { GetRaidBossesConfigHandler } from './app/queries/get-raid-bosses-config/get-raid-bosses-config.handler';
 import { GetRaidBossByIdHandler } from './app/queries/get-raid-boss-by-id/get-raid-boss-by-id.handler';
-import { RaidBossKilledUpdater } from './app/updaters/raid-boss-killed.updater';
-import { RaidBossConfigUpdater } from './app/updaters/raid-boss-config.updater';
 import { RespawnPredictor } from './services/respawn-predictor.service';
 
 const commandHandlers = [KillRaidBossHandler, GenerateConfigHandler];
-const stateUpdaters = [RaidBossKilledUpdater, RaidBossConfigUpdater];
 const queryHandlers = [
   GetRaidBossHandler,
   GetRaidBossesHandler,
@@ -32,7 +28,6 @@ const queryHandlers = [
 @Module({
   imports: [
     CqrsModule,
-    EventSourcingModule.forFeature(),
     getRaidBossConfigRepositoryConnection(),
     getRaidBossReadRepositoryConnection(),
     AsteriosServerModule,
@@ -42,7 +37,6 @@ const queryHandlers = [
     RaidBossRepository,
     RespawnPredictor,
     ...commandHandlers,
-    ...stateUpdaters,
     ...queryHandlers,
   ],
 })

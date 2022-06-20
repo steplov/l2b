@@ -4,7 +4,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
 import { MongooseModule } from '@nestjs/mongoose';
 import { I18nModule, I18nJsonParser } from 'nestjs-i18n';
-import { EventSourcingModule } from '@shared/libs/eventsourcing';
 import { AuthModule } from '@modules/auth/auth.module';
 import { TelegramBotModule } from '@modules/telegram-bot';
 import { ApiModule } from '@modules/api/api.module';
@@ -18,7 +17,8 @@ import { AppService } from './app.service';
     CqrsModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: process.env.NODE_ENV === 'production' ? '.env' : '.env.development',
+      envFilePath:
+        process.env.NODE_ENV === 'production' ? '.env' : '.env.development',
     }),
     I18nModule.forRootAsync({
       useFactory: (config: ConfigService) => ({
@@ -26,22 +26,16 @@ import { AppService } from './app.service';
         parserOptions: {
           path: join(__dirname, '/i18n/'),
           watch: process.env.NODE_ENV !== 'production',
-        }
+        },
       }),
       parser: I18nJsonParser,
       inject: [ConfigService],
     }),
-    EventSourcingModule.forRootAsync({
-      useFactory: async (config: ConfigService) => ({
-        mongoURL: config.get('eventsourcing.mongodb.url'),
-      }),
-      inject: [ConfigService],
-    }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
-      connectionName: 'read',
+      connectionName: 'l2b',
       useFactory: async (config: ConfigService) => ({
-        uri: config.get('read.mongodb.url'),
+        uri: config.get('mongodb.url'),
         useNewUrlParser: true,
         useUnifiedTopology: true,
       }),

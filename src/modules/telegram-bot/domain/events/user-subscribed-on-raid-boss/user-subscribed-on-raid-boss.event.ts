@@ -1,9 +1,6 @@
-import { StorableEvent } from '@shared/libs/eventsourcing';
+import { Event } from '@shared/domain/base-classes/event';
 
-export class UserSubscribedOnRaidBoss extends StorableEvent {
-  eventAggregate = 'telegramUser';
-  eventVersion = 1;
-
+export class UserSubscribedOnRaidBoss extends Event {
   constructor(
     public readonly id: string,
     public readonly subscriptions: string[],

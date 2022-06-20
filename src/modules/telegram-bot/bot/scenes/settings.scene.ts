@@ -22,7 +22,7 @@ const enum StaticActions {
   Root = 'root',
   EN = 'en',
   UA = 'ua',
-  RU = 'ru'
+  RU = 'ru',
 }
 
 @Scene(SETTINGS_SCENE_ID)
@@ -42,7 +42,7 @@ export class SettingsScene {
     );
 
     if (userResult.isFailure) {
-      throw new Error(userResult.error)
+      throw new Error(userResult.error);
     }
 
     ctx.ga4.event('page_view', { page_title: `tg:settings` });
@@ -70,7 +70,7 @@ export class SettingsScene {
     (ctx.scene.state as SettingsSceneContext).languageCode = newLanguage;
 
     ctx.ga4.event('tg_change_language', {
-      lang: newLanguage
+      lang: newLanguage,
     });
 
     await this.commandBus.execute(
@@ -114,35 +114,23 @@ export class SettingsScene {
     const langs = [
       Markup.button.callback('Українська', StaticActions.UA),
       Markup.button.callback('English', StaticActions.EN),
-      Markup.button.callback('Русский', StaticActions.RU)
+      Markup.button.callback('Русский', StaticActions.RU),
     ];
     const buttons = [];
 
-    switch((ctx.scene.state as SettingsSceneContext).languageCode) {
+    switch ((ctx.scene.state as SettingsSceneContext).languageCode) {
       case StaticActions.EN:
-        buttons.push(
-          langs[0],
-          langs[2]
-        )
+        buttons.push(langs[0], langs[2]);
         break;
       case StaticActions.UA:
-        buttons.push(
-          langs[1],
-          langs[2]
-        )
+        buttons.push(langs[1], langs[2]);
         break;
       case StaticActions.RU:
-        buttons.push(
-          langs[0],
-          langs[1]
-        )
-        break
+        buttons.push(langs[0], langs[1]);
+        break;
     }
 
-    const keyboard = [
-      buttons,
-      [await this.getInlineCloseBtn(ctx)]
-    ]
+    const keyboard = [buttons, [await this.getInlineCloseBtn(ctx)]];
 
     return Markup.inlineKeyboard(keyboard);
   }

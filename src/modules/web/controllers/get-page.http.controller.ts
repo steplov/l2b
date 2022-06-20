@@ -19,22 +19,23 @@ export class GetPageHttpController {
   constructor(
     private readonly queryBus: QueryBus,
     private readonly i18n: I18nService,
-    private readonly config: ConfigService
+    private readonly config: ConfigService,
   ) {}
 
   @Get(routesV1.web.index)
   @Render('index')
   async index(): Promise<any> {
-    return new IndexPageDto(
-      await this.i18n.t('messages.INDEX_TITLE')
-    )
+    return new IndexPageDto(await this.i18n.t('messages.INDEX_TITLE'));
   }
 
   @Get(routesV1.web.asterios)
   @Render('widget')
-  async widget(@Query() request: GetRaidBossesHttpRequest): Promise<RaidBossesWidgetDto | { error: string }> {
+  async widget(
+    @Query() request: GetRaidBossesHttpRequest,
+  ): Promise<RaidBossesWidgetDto | { error: string }> {
     const lang = request.lang || this.config.get('fallbackLanguage');
-    const server = asteriosServerRequestMap[request.server] || AsteriosServer.Asterios;
+    const server =
+      asteriosServerRequestMap[request.server] || AsteriosServer.Asterios;
     const query = new GetRaidBosses({
       project: Project.Asterios,
       server,

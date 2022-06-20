@@ -1,13 +1,10 @@
-import { StorableEvent } from '@shared/libs/eventsourcing';
+import { Event } from '@shared/domain/base-classes/event';
 import {
   Respawn,
   RespawnProps,
 } from '../../value-objects/respawn.value-object';
 
-export class RaidBossKilled extends StorableEvent {
-  eventAggregate = 'raidBoss';
-  eventVersion = 1;
-
+export class RaidBossKilled extends Event {
   respawn: RespawnProps;
 
   constructor(

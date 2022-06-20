@@ -1,7 +1,10 @@
 import { Logger } from '@nestjs/common';
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler, EventBus } from '@nestjs/cqrs';
 import { Result } from '@shared/domain/utils';
-import { StoreEventPublisher } from '@shared/libs/eventsourcing';
+import {
+  TelegramUserAggregate,
+  TelegramUserAggregateProps,
+} from '../../../domain/entities/telegram-user.aggregate';
 import { UserRepository } from '../../../infra/repositories/user.repository';
 import { CreateUser } from './create-user.command';
 
@@ -11,7 +14,7 @@ export class CreateUserHandler implements ICommandHandler<CreateUser> {
 
   constructor(
     private readonly repository: UserRepository,
-    private readonly publisher: StoreEventPublisher,
+    private readonly eventBus: EventBus,
   ) {}
 
   async execute(command: CreateUser) {
@@ -20,11 +23,25 @@ export class CreateUserHandler implements ICommandHandler<CreateUser> {
     const { id, languageCode } = command;
 
     try {
-      const telegramUserAggregate = this.publisher.mergeObjectContext(
-        await this.repository.findOneById(id),
-      );
+      const user = await this.repository.findUserById(id);
+
+      let telegramUserAggregate: TelegramUserAggregate;
+      if (user) {
+        telegramUserAggregate = new TelegramUserAggregate(
+          this.eventBus,
+          user,
+          id,
+        );
+      } else {
+        telegramUserAggregate = new TelegramUserAggregate(
+          this.eventBus,
+          {},
+          id,
+        );
+      }
 
       telegramUserAggregate.create(languageCode);
+      this.save(id, telegramUserAggregate);
       telegramUserAggregate.commit();
 
       return Result.ok(command.id);
@@ -32,5 +49,16 @@ export class CreateUserHandler implements ICommandHandler<CreateUser> {
       this.logger.error(e);
       return Result.fail(e.message);
     }
+  }
+
+  async save(id: string, telegramUserAggregate: TelegramUserAggregate) {
+    const { subscriptions, languageCode } =
+      telegramUserAggregate.user.toObject() as TelegramUserAggregateProps;
+
+    await this.repository.saveUser({
+      _id: id,
+      subscriptions,
+      languageCode,
+    });
   }
 }

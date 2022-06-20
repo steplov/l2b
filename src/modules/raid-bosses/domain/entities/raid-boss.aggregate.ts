@@ -1,5 +1,6 @@
-import { AggregateRoot } from '@nestjs/cqrs';
+import { EventBus } from '@nestjs/cqrs';
 import { RaidBoss, Project, ServerTuple } from '@shared/config';
+import { Aggregate } from '@shared/domain/base-classes/aggregate';
 import { RaidBossEntity } from './raid-boss.entity';
 import { Server } from '../value-objects/server.value-object';
 import { Respawn } from '../value-objects/respawn.value-object';
@@ -12,11 +13,15 @@ export interface RaidBossAggregateProps {
   killDate: Date;
 }
 
-export class RaidBossAggregate extends AggregateRoot {
+export class RaidBossAggregate extends Aggregate {
   raidBoss: RaidBossEntity;
 
-  constructor(props: RaidBossAggregateProps, public readonly id: string) {
-    super();
+  constructor(
+    eventBus: EventBus,
+    props: RaidBossAggregateProps,
+    public readonly id: string,
+  ) {
+    super(eventBus);
 
     const server = new Server({
       project: props.project,

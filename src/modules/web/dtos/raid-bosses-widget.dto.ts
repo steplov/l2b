@@ -25,7 +25,10 @@ export class RaidBossesWidgetDto {
       title: value,
       value: serverResponseMap[value],
     }));
-    this.languages = ['en', 'ua', 'ru'].map((lang) => ({ title: lang, value: lang }));
+    this.languages = ['en', 'ua', 'ru'].map((lang) => ({
+      title: lang,
+      value: lang,
+    }));
 
     this.server = {
       title: serverRequestMap[server],

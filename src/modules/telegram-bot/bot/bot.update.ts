@@ -21,7 +21,7 @@ import {
   RESPAWN_SCENE_ID,
   SUBSCRIPTION_SCENE_ID,
   SETTINGS_SCENE_ID,
-  DONATE_SCENE_ID
+  DONATE_SCENE_ID,
 } from './constants';
 import { Context } from './interfaces/context.interface';
 import { ResponseTimeInterceptor } from './common/interceptors/response-time.interceptor';
@@ -40,7 +40,7 @@ interface BotContext {
 @UseInterceptors(ResponseTimeInterceptor)
 @UseFilters(TelegrafExceptionFilter)
 export class BotUpdate {
-  private readonly ga4: TelegrafGA4; 
+  private readonly ga4: TelegrafGA4;
 
   private readonly logger = new Logger(BotUpdate.name);
 
@@ -55,10 +55,10 @@ export class BotUpdate {
     this.ga4 = new TelegrafGA4({
       measurement_id: this.config.get('ga.measurement_id'),
       api_secret: this.config.get('ga.api_secret'),
-      client_id: this.config.get('ga.client_id')
+      client_id: this.config.get('ga.client_id'),
     });
 
-    this.bot.use(this.ga4.middleware())
+    this.bot.use(this.ga4.middleware());
   }
 
   @Start()
@@ -71,7 +71,7 @@ export class BotUpdate {
         languageCode: language_code,
       }),
     );
-    
+
     ctx.ga4.event('login', { method: 'tg' });
 
     await sleep(100);
@@ -81,7 +81,7 @@ export class BotUpdate {
     );
 
     if (userResult.isFailure) {
-      throw new Error(userResult.error)
+      throw new Error(userResult.error);
     }
 
     const { languageCode } = userResult.getValue();
@@ -94,7 +94,9 @@ export class BotUpdate {
 
   @Help()
   async onHelp(@Ctx() ctx: Context) {
-    ctx.replyWithPhoto({ source: path.join(__dirname, '../../../../views/icon.png')})
+    ctx.replyWithPhoto({
+      source: path.join(__dirname, '../../../../views/icon.png'),
+    });
   }
 
   @Command('/respawn')
@@ -141,14 +143,16 @@ export class BotUpdate {
 
     for await (const userId of userIds) {
       const lang = await this.getUserLanguage(userId);
-  
+
       if (lang) {
-        const message = await this.i18n.t('telegram.BOSS_WAS_KILLED', { lang, args: {
+        const message = await this.i18n.t('telegram.BOSS_WAS_KILLED', {
+          lang,
+          args: {
             server: raidBoss.server,
-            raidBoss: raidBoss.raidBoss
-          }
+            raidBoss: raidBoss.raidBoss,
+          },
         });
-  
+
         await this.bot.telegram.sendMessage(userId, message, {
           parse_mode: 'HTML',
         });
@@ -167,12 +171,13 @@ export class BotUpdate {
       const lang = await this.getUserLanguage(userId);
 
       if (lang) {
-
-        const message = await this.i18n.t('telegram.BOSS_WILL_SPAWN_IN', { lang, args: {
+        const message = await this.i18n.t('telegram.BOSS_WILL_SPAWN_IN', {
+          lang,
+          args: {
             server: raidBoss.server,
             raidBoss: raidBoss.raidBoss,
-            count: hours
-          }
+            count: hours,
+          },
         });
 
         await this.bot.telegram.sendMessage(userId, message, {
@@ -194,7 +199,7 @@ export class BotUpdate {
     );
 
     if (userResult.isFailure) {
-      this.logger.error(userResult.error)
+      this.logger.error(userResult.error);
       return undefined;
     }
 

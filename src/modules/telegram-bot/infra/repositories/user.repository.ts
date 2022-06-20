@@ -1,27 +1,41 @@
 import { Injectable } from '@nestjs/common';
-import { EventStore } from '@shared/libs/eventsourcing';
-import { TelegramUserAggregate } from '../../domain/entities/telegram-user.aggregate';
+import { InjectModel, MongooseModule } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { User, UserDocument, UserSchema } from '../schemas/user.schema';
+import { UserReadDto } from '../dto/user-read.dto';
 
 @Injectable()
 export class UserRepository {
-  constructor(private readonly eventStore: EventStore) {}
+  constructor(
+    @InjectModel(User.name)
+    private readonly userReadModel: Model<UserDocument>,
+  ) {}
 
-  async findOneById(id: string): Promise<TelegramUserAggregate> {
-    const telegramUserAggregate = new TelegramUserAggregate(
-      {
-        firstName: 'John',
-        lastName: 'Doe',
-        username: 'johndoe',
-        languageCode: 'en',
-        subscriptions: [],
-      },
-      id,
-    );
+  async findUsers() {
+    return await this.userReadModel.find().exec();
+  }
 
-    const events = await this.eventStore.getEvents('telegramUser', id);
+  async findUserById(id: string): Promise<UserReadDto> {
+    return await this.userReadModel.findOne({ _id: id }).exec();
+  }
 
-    telegramUserAggregate.loadFromHistory(events.events);
+  async findUsersByRaidBossId(raidBossId: string): Promise<UserReadDto[]> {
+    return await this.userReadModel.find({ subscriptions: raidBossId }).exec();
+  }
 
-    return telegramUserAggregate;
+  async saveUser(userReadDto: UserReadDto) {
+    const _id = userReadDto._id;
+    const userRaw = await this.userReadModel.findOne({ _id }).exec();
+
+    if (!!userRaw) {
+      await this.userReadModel.updateOne({ _id }, userReadDto, {
+        new: true,
+      });
+    } else {
+      await this.userReadModel.create(userReadDto);
+    }
   }
 }
+
+export const getUserReadRepositoryConnection = () =>
+  MongooseModule.forFeature([{ name: User.name, schema: UserSchema }], 'l2b');

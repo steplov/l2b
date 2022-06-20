@@ -1,14 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel, MongooseModule } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { EventStore } from '@shared/libs/eventsourcing';
 import { RaidBossConfigDto } from '@shared/dto/raid-boss-config.dto';
-import { RaidBossAggregate } from '../../domain/entities/raid-boss.aggregate';
 import {
-  RaidBossRead,
-  RaidBossReadDocument,
-  RaidBossReadSchema,
-} from '../schemas/raid-boss-read.schema';
+  RaidBoss,
+  RaidBossDocument,
+  RaidBossSchema,
+} from '../schemas/raid-boss.schema';
 import {
   RaidBossConfig,
   RaidBossConfigDocument,
@@ -18,31 +16,11 @@ import { RaidBossReadDto } from '../dto/raid-boss-read.dto';
 @Injectable()
 export class RaidBossRepository {
   constructor(
-    private readonly eventStore: EventStore,
-    @InjectModel(RaidBossRead.name)
-    private readonly raidBossReadModel: Model<RaidBossReadDocument>,
+    @InjectModel(RaidBoss.name)
+    private readonly raidBossReadModel: Model<RaidBossDocument>,
     @InjectModel(RaidBossConfig.name)
     private readonly raidBossConfigModel: Model<RaidBossConfigDocument>,
   ) {}
-
-  async findOneById(id: string): Promise<RaidBossAggregate> {
-    const { project, server, raidBoss } = await this.findRaidBossById(id);
-    const raidBossAggregate = new RaidBossAggregate(
-      {
-        project,
-        server,
-        raidBoss,
-        killDate: new Date('2000-01-01'),
-      },
-      id,
-    );
-
-    const events = await this.eventStore.getEvents('raidBoss', id);
-
-    raidBossAggregate.loadFromHistory(events.events);
-
-    return raidBossAggregate;
-  }
 
   async saveToRaidBossRead(raidBossReadDto: RaidBossReadDto) {
     const _id = raidBossReadDto._id;
@@ -86,6 +64,6 @@ export class RaidBossRepository {
 
 export const getRaidBossReadRepositoryConnection = () =>
   MongooseModule.forFeature(
-    [{ name: RaidBossRead.name, schema: RaidBossReadSchema }],
-    'read',
+    [{ name: RaidBoss.name, schema: RaidBossSchema }],
+    'l2b',
   );

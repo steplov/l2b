@@ -1,7 +1,10 @@
 import { Logger } from '@nestjs/common';
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler, EventBus } from '@nestjs/cqrs';
 import { Result } from '@shared/domain/utils';
-import { StoreEventPublisher } from '@shared/libs/eventsourcing';
+import {
+  TelegramUserAggregate,
+  TelegramUserAggregateProps,
+} from '../../../domain/entities/telegram-user.aggregate';
 import { UserRepository } from '../../../infra/repositories/user.repository';
 import { UpdateUserSettings } from './update-user-settings.command';
 
@@ -13,7 +16,7 @@ export class UpdateUserSettingsHandler
 
   constructor(
     private readonly repository: UserRepository,
-    private readonly publisher: StoreEventPublisher,
+    private readonly eventBus: EventBus,
   ) {}
 
   async execute(command: UpdateUserSettings) {
@@ -22,11 +25,15 @@ export class UpdateUserSettingsHandler
     const { userId, languageCode } = command;
 
     try {
-      const telegramUserAggregate = this.publisher.mergeObjectContext(
-        await this.repository.findOneById(userId),
+      const user = await this.repository.findUserById(userId);
+      const telegramUserAggregate = new TelegramUserAggregate(
+        this.eventBus,
+        user,
+        userId,
       );
 
       telegramUserAggregate.updateSettings(languageCode);
+      this.save(userId, telegramUserAggregate);
       telegramUserAggregate.commit();
 
       return Result.ok(command.userId);
@@ -34,5 +41,16 @@ export class UpdateUserSettingsHandler
       this.logger.error(e);
       return Result.fail(e.message);
     }
+  }
+
+  async save(id: string, telegramUserAggregate: TelegramUserAggregate) {
+    const { subscriptions, languageCode } =
+      telegramUserAggregate.user.toObject() as TelegramUserAggregateProps;
+
+    await this.repository.saveUser({
+      _id: id,
+      subscriptions,
+      languageCode,
+    });
   }
 }

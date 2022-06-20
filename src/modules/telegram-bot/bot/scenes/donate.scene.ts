@@ -1,7 +1,14 @@
 import { UseFilters, UseInterceptors } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { Markup } from 'telegraf';
-import { Scene, SceneEnter, Action, SceneLeave, Ctx, On } from 'nestjs-telegraf';
+import {
+  Scene,
+  SceneEnter,
+  Action,
+  SceneLeave,
+  Ctx,
+  On,
+} from 'nestjs-telegraf';
 import { I18nService } from 'nestjs-i18n';
 import { Result } from '@shared/domain/utils';
 import { DONATE_SCENE_ID } from '../constants';
@@ -20,7 +27,7 @@ const enum StaticActions {
   Close = 'close',
   Donate1 = 'donate_1',
   Donate2 = 'donate_2',
-  Donate5 = 'donate_5'
+  Donate5 = 'donate_5',
 }
 
 @Scene(DONATE_SCENE_ID)
@@ -39,12 +46,11 @@ export class DonateScene {
     );
 
     if (userResult.isFailure) {
-      throw new Error(userResult.error)
+      throw new Error(userResult.error);
     }
 
     const { languageCode } = userResult.getValue();
     (ctx.scene.state as DonateSceneContext).languageCode = languageCode;
-
 
     const data = await ctx.replyWithHTML(
       'Donate',
@@ -74,7 +80,7 @@ export class DonateScene {
   async donate(@Ctx() ctx) {
     const [action, amount] = ctx.match.input.split('_');
 
-    console.log
+    console.log;
     return ctx.replyWithInvoice(this.getInvoice(ctx.from.id, parseInt(amount)));
   }
 
@@ -86,9 +92,24 @@ export class DonateScene {
 
   private async getInlineRootKeyboard(ctx: Context) {
     const keyboard = [
-      [Markup.button.callback('💲 Donate 1$ for a beer', StaticActions.Donate1)],
-      [Markup.button.callback('💲 Donate 2$ for a beer', StaticActions.Donate2)],
-      [Markup.button.callback('💲 Donate 5$ for a beer', StaticActions.Donate5)],
+      [
+        Markup.button.callback(
+          '💲 Donate 1$ for a beer',
+          StaticActions.Donate1,
+        ),
+      ],
+      [
+        Markup.button.callback(
+          '💲 Donate 2$ for a beer',
+          StaticActions.Donate2,
+        ),
+      ],
+      [
+        Markup.button.callback(
+          '💲 Donate 5$ for a beer',
+          StaticActions.Donate5,
+        ),
+      ],
       [await this.getInlineCloseBtn(ctx)],
     ];
 
@@ -102,12 +123,10 @@ export class DonateScene {
       title: 'Donate for a beer',
       description: `Give $${amount}.00 for admin to buy himself a beer`,
       currency: 'USD',
-      prices: [
-        { label: `$${amount}.00`, amount: amount * 100 }
-      ],
-      payload: `donate from ${id}`
-    }
-  
-    return invoice
+      prices: [{ label: `$${amount}.00`, amount: amount * 100 }],
+      payload: `donate from ${id}`,
+    };
+
+    return invoice;
   }
 }

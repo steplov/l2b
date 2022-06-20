@@ -64,7 +64,7 @@ export class RespawnScene {
     );
 
     if (userResult.isFailure) {
-      throw new Error(userResult.error)
+      throw new Error(userResult.error);
     }
 
     const { languageCode } = userResult.getValue();
@@ -101,7 +101,9 @@ export class RespawnScene {
     const lang = (ctx.scene.state as RespawnSceneContext).languageCode;
     const [project, server] = (ctx.callbackQuery as any).data.split('-');
 
-    ctx.ga4.event('page_view', { page_title: `tg:respawn:${project}:${server}` });
+    ctx.ga4.event('page_view', {
+      page_title: `tg:respawn:${project}:${server}`,
+    });
 
     const query = new GetRaidBosses({ project, server });
 
@@ -152,14 +154,16 @@ export class RespawnScene {
     const bossTitle = await this.i18n.t(`common.${raidBoss.raidBoss}`, {
       lang,
     });
-    const key = raidBoss.startsIn ? 'telegram.BOT_RESPAWN_STARTS_IN': 'telegram.BOT_RESPAWN_DURATION';
+    const key = raidBoss.startsIn
+      ? 'telegram.BOT_RESPAWN_STARTS_IN'
+      : 'telegram.BOT_RESPAWN_DURATION';
 
     return await this.i18n.t(key, {
       lang,
       args: {
         startsIn: raidBoss.startsIn,
         respawnDuration: raidBoss.respawnDuration,
-        raidBoss: bossTitle
+        raidBoss: bossTitle,
       },
     });
   }

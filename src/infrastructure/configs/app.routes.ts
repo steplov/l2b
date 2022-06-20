@@ -18,6 +18,6 @@ export const routesV1 = {
     asterios: `${webRoot}/asterios`,
     notify: `${webRoot}/admin/notify`,
     config: `${webRoot}/admin/config`,
-    users: `${webRoot}/admin/users`
+    users: `${webRoot}/admin/users`,
   },
 };

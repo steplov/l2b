@@ -1,14 +1,10 @@
-import { StorableEvent } from '@shared/libs/eventsourcing';
+import { Event } from '@shared/domain/base-classes/event';
 import {
   RaidBossEntry,
   RaidBossEntryProps,
 } from '../../value-objects/raid-boss-entry.value-object';
 
-export class RaidBossConfigUpdated extends StorableEvent {
-  eventAggregate = 'raidBossConfig';
-  eventVersion = 1;
-  id = '1';
-
+export class RaidBossConfigUpdated extends Event {
   raidBosses: RaidBossEntryProps[];
 
   constructor(props: { raidBosses: RaidBossEntryProps[] }) {

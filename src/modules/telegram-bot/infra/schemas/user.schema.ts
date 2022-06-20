@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 @Schema()
-export class UserRead {
+export class User {
   @Prop()
   _id: string;
 
@@ -13,6 +13,6 @@ export class UserRead {
   subscriptions: string[];
 }
 
-export const UserReadSchema = SchemaFactory.createForClass(UserRead);
+export const UserSchema = SchemaFactory.createForClass(User);
 
-export type UserReadDocument = UserRead & Document;
+export type UserDocument = User & Document;

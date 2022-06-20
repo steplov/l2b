@@ -1,9 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Project, ServerTuple, RaidBoss } from '@shared/config';
+import {
+  Project,
+  ServerTuple,
+  RaidBoss as RaidBossConfig,
+} from '@shared/config';
 
 @Schema()
-export class RaidBossRead {
+export class RaidBoss {
   @Prop()
   _id: string;
 
@@ -14,7 +18,7 @@ export class RaidBossRead {
   server: ServerTuple;
 
   @Prop()
-  raidBoss: RaidBoss;
+  raidBoss: RaidBossConfig;
 
   @Prop()
   killDate: Date;
@@ -26,6 +30,6 @@ export class RaidBossRead {
   max: Date;
 }
 
-export const RaidBossReadSchema = SchemaFactory.createForClass(RaidBossRead);
+export const RaidBossSchema = SchemaFactory.createForClass(RaidBoss);
 
-export type RaidBossReadDocument = RaidBossRead & Document;
+export type RaidBossDocument = RaidBoss & Document;

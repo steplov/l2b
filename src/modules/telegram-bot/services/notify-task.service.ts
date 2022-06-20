@@ -5,7 +5,7 @@ import { Interval } from '@nestjs/schedule';
 import { Result } from '@shared/domain/utils';
 import { RaidBossDto } from '@modules/raid-bosses/infra/dto/raid-boss.dto';
 import { GetRaidBosses } from '@modules/raid-bosses/app/queries/get-raid-bosses/get-raid-bosses.query';
-import { UserReadRepository } from '../infra/repositories/user-read.repository';
+import { UserRepository } from '../infra/repositories/user.repository';
 import { UserReadDto } from '../infra/dto/user-read.dto';
 import { BotUpdate } from '../bot/bot.update';
 
@@ -16,7 +16,7 @@ export class NotifyTaskService {
   private readonly logger = new Logger(NotifyTaskService.name);
 
   constructor(
-    private readonly readRepository: UserReadRepository,
+    private readonly repository: UserRepository,
     private readonly queryBus: QueryBus,
     private readonly botUpdate: BotUpdate,
   ) {}
@@ -40,7 +40,7 @@ export class NotifyTaskService {
     if (filteredBosses.length) {
       for await (const raidBoss of filteredBosses) {
         const users: UserReadDto[] =
-          await this.readRepository.findUsersByRaidBossId(raidBoss.id);
+          await this.repository.findUsersByRaidBossId(raidBoss.id);
 
         await this.botUpdate.notifyTimeBeforeMaxSpawn(
           raidBoss,

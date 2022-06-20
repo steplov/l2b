@@ -78,7 +78,7 @@ export class SubscriptionsScene {
     );
 
     if (userResult.isFailure) {
-      throw new Error(userResult.error)
+      throw new Error(userResult.error);
     }
 
     ctx.ga4.event('page_view', { page_title: 'tg:subscriptions' });
@@ -232,7 +232,7 @@ export class SubscriptionsScene {
         ctx.ga4.event('tg_subscribe', {
           project,
           server,
-          raidBoss
+          raidBoss,
         });
         await this.commandBus.execute(new SubscribeToRaidBoss(props));
         message += `\n(🟢 ${raidBoss})`;
@@ -240,7 +240,7 @@ export class SubscriptionsScene {
         ctx.ga4.event('tg_unsubscribe', {
           project,
           server,
-          raidBoss
+          raidBoss,
         });
         await this.commandBus.execute(new UnsubscribeFromRaidBoss(props));
         message += `\n(❌ ${raidBoss})`;
@@ -248,7 +248,9 @@ export class SubscriptionsScene {
 
       await sleep(100);
     } else {
-      ctx.ga4.event('page_view', { page_title: `tg:subscriptions:edit:${project}:${server}` });
+      ctx.ga4.event('page_view', {
+        page_title: `tg:subscriptions:edit:${project}:${server}`,
+      });
     }
 
     const subscriptionsResult: Result<RaidBossConfigDto[]> =

@@ -1,7 +1,11 @@
 const value = (val, context, options) => {
-  const isObject = (val) => Object.prototype.toString.call(val) === '[object Object]';
+  const isObject = (val) =>
+    Object.prototype.toString.call(val) === '[object Object]';
   const isOptions = (val) => isObject(val) && isObject(val.hash);
-  const isBlock = (options) => isOptions(options) && typeof options.fn === 'function' && typeof options.inverse === 'function';
+  const isBlock = (options) =>
+    isOptions(options) &&
+    typeof options.fn === 'function' &&
+    typeof options.inverse === 'function';
 
   if (isOptions(val)) {
     return value(null, val, options);
@@ -14,8 +18,6 @@ const value = (val, context, options) => {
   }
   return val;
 };
-
-
 
 /**
  * Render a block when a comparison of the first and third
@@ -34,7 +36,7 @@ export function compare(a, operator, b, options) {
     throw new Error('handlebars Helper {{compare}} expects 4 arguments');
   }
 
-  var result;
+  let result;
   switch (operator) {
     case '==':
       result = a == b;
@@ -64,9 +66,11 @@ export function compare(a, operator, b, options) {
       result = typeof a === b;
       break;
     default: {
-      throw new Error('helper {{compare}}: invalid operator: `' + operator + '`');
+      throw new Error(
+        'helper {{compare}}: invalid operator: `' + operator + '`',
+      );
     }
   }
 
   return value(result, this, options);
-};
+}
