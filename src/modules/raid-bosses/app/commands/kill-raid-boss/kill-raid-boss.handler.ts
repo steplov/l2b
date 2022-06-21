@@ -88,7 +88,7 @@ export class KillRaidBossHandler implements ICommandHandler<KillRaidBoss> {
 
       raidBossAggregate.kill(killDate, min, max);
 
-      this.saveRb(raidBossResponse.id, raidBossAggregate);
+      await this.saveRb(raidBossResponse.id, raidBossAggregate);
 
       raidBossAggregate.commit();
 

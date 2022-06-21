@@ -54,7 +54,7 @@ export class SubscribeToRaidBossHandler
       }
 
       telegramUserAggregate.subscribe(raidResult.getValue().id);
-      this.save(command.userId, telegramUserAggregate);
+      await this.save(command.userId, telegramUserAggregate);
       telegramUserAggregate.commit();
 
       return Result.ok(telegramUserAggregate.user.subscriptions);

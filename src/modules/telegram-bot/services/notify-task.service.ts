@@ -35,8 +35,6 @@ export class NotifyTaskService {
   private async execute(raidBosses, hours: number) {
     const filteredBosses = this.filter(raidBosses, hours);
 
-    console.log('filteredBosses', filteredBosses);
-
     if (filteredBosses.length) {
       for await (const raidBoss of filteredBosses) {
         const users: UserReadDto[] =

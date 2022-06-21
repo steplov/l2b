@@ -33,7 +33,7 @@ export class UpdateUserSettingsHandler
       );
 
       telegramUserAggregate.updateSettings(languageCode);
-      this.save(userId, telegramUserAggregate);
+      await this.save(userId, telegramUserAggregate);
       telegramUserAggregate.commit();
 
       return Result.ok(command.userId);

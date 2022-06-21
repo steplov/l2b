@@ -41,7 +41,7 @@ export class CreateUserHandler implements ICommandHandler<CreateUser> {
       }
 
       telegramUserAggregate.create(languageCode);
-      this.save(id, telegramUserAggregate);
+      await this.save(id, telegramUserAggregate);
       telegramUserAggregate.commit();
 
       return Result.ok(command.id);
