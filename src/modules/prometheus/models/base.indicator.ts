@@ -21,7 +21,7 @@ export abstract class BaseIndicator {
   public updatePrometheusData(isConnected: boolean): void {
     if (this.stateIsConnected !== isConnected) {
       if (isConnected) {
-        this.logger.log(this.name + ' is available');
+        this.logger.debug(this.name + ' is available');
       }
 
       this.stateIsConnected = isConnected;
@@ -40,7 +40,7 @@ export abstract class BaseIndicator {
     this.logger = new Logger(this.name);
 
     if (this.promClientService) {
-      this.logger.log('Register metrics histogram for: ' + this.name);
+      this.logger.debug('Register metrics histogram for: ' + this.name);
       this.metricsRegistered = true;
       const histogram: PrometheusHistogram =
         this.promClientService.registerMetrics(
@@ -57,7 +57,7 @@ export abstract class BaseIndicator {
     this.logger = new Logger(this.name);
 
     if (this.promClientService) {
-      this.logger.log('Register metrics gauge for: ' + this.name);
+      this.logger.debug('Register metrics gauge for: ' + this.name);
       this.gaugesRegistered = true;
       this.gauge = this.promClientService.registerGauge(this.name, this.help);
     }

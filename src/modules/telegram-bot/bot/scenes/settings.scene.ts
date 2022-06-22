@@ -45,9 +45,15 @@ export class SettingsScene {
       throw new Error(userResult.error);
     }
 
+    const user = userResult.getValue();
+
+    if (!user) {
+      throw new Error('Something went wrong. Please restart the bot');
+    }
+
     ctx.ga4.event('page_view', { page_title: `tg:settings` });
 
-    const { languageCode: lang } = userResult.getValue();
+    const { languageCode: lang } = user;
 
     (ctx.scene.state as SettingsSceneContext).languageCode = lang;
 

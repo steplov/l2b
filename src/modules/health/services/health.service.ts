@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import {
   HealthCheck,
   HealthCheckResult,
@@ -21,28 +22,28 @@ export class HealthService {
   private host: string;
 
   constructor(
-    private health: HealthCheckService,
-    private http: HttpHealthIndicator,
-    private promClientService: PrometheusService,
-    private mongoose: MongooseHealthIndicator,
+    private readonly health: HealthCheckService,
+    private readonly http: HttpHealthIndicator,
+    private readonly promClientService: PrometheusService,
+    private readonly mongoose: MongooseHealthIndicator,
     @InjectConnection('l2b')
-    mongodb1: Connection,
+    private readonly mongodb1: Connection,
+    private readonly config: ConfigService
   ) {
+    this.host = this.config.get<string>('host');
+
     this.listOfThingsToMonitor = [
       new MongoDBHealthIndicator(
-        mongodb1,
+        this.mongodb1,
         this.mongoose,
         this.promClientService,
       ),
     ];
   }
 
-  setHost(url: string) {
-    this.host = url;
-  }
-
   @HealthCheck()
   public async check(): Promise<HealthCheckResult | undefined> {
+    console.log(`${this.host}${routesV1.web.asterios}?server=asterios`)
     this.listOfThingsToMonitor.push(
       new WebHealthIndicator(
         this.http,

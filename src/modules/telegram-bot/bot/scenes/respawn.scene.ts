@@ -67,7 +67,13 @@ export class RespawnScene {
       throw new Error(userResult.error);
     }
 
-    const { languageCode } = userResult.getValue();
+    const user = userResult.getValue();
+
+    if (!user) {
+      throw new Error('Something went wrong. Please restart the bot');
+    }
+
+    const { languageCode } = user;
 
     (ctx.scene.state as RespawnSceneContext).project = project;
     (ctx.scene.state as RespawnSceneContext).languageCode = languageCode;

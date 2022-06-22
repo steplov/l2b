@@ -81,10 +81,16 @@ export class SubscriptionsScene {
       throw new Error(userResult.error);
     }
 
+    const user = userResult.getValue();
+
+    if (!user) {
+      throw new Error('Something went wrong. Please restart the bot');
+    }
+
     ctx.ga4.event('page_view', { page_title: 'tg:subscriptions' });
     ctx.ga4.event('tg:subscriptions:enter');
 
-    const { languageCode } = userResult.getValue();
+    const { languageCode } = user;
 
     (ctx.scene.state as SubscribeSceneContext).languageCode = languageCode;
 
