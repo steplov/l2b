@@ -26,7 +26,11 @@ export class RaidBossKilledHandler implements IEventHandler<RaidBossKilled> {
       new GetRaidBossById({ raidBossId: event.id }),
     );
 
-    this.logger.log(`RaidBossKilledHandler: (raidBossResult): ${JSON.stringify(raidBossResult)}`);
+    this.logger.log(
+      `RaidBossKilledHandler: (raidBossResult): ${JSON.stringify(
+        raidBossResult,
+      )}`,
+    );
 
     if (raidBossResult.isFailure) {
       return;
@@ -46,7 +50,11 @@ export class RaidBossKilledHandler implements IEventHandler<RaidBossKilled> {
       raidBoss.id,
     );
 
-    this.logger.log(`RaidBossKilledHandler: (notify): ${JSON.stringify(raidBossResult)} ${JSON.stringify(users)}`);
+    this.logger.log(
+      `RaidBossKilledHandler: (notify): ${JSON.stringify(
+        raidBossResult,
+      )} ${JSON.stringify(users)}`,
+    );
 
     this.botUpdate.notifyBossKilled(
       raidBoss,

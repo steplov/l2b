@@ -12,6 +12,8 @@ export const routesV1 = {
     servers: `${apiRoot}/:project`,
     server: `${apiRoot}/:project/:server`,
     boss: `${apiRoot}/:project/:server/:raidBoss`,
+    health: `${apiRoot}/health`,
+    metrics: `${apiRoot}/metrics`,
   },
   web: {
     index: webRoot,

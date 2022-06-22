@@ -10,6 +10,9 @@ import { ApiModule } from '@modules/api/api.module';
 import { WebModule } from '@modules/web/web.module';
 import { AsteriosServerModule } from '@modules/asterios-server/asterios-server.module';
 import { RaidBossesModule } from '@modules/raid-bosses/raid-bosses.module';
+import { HealthModule } from '@modules/health/health.module';
+import { PrometheusModule } from '@modules/prometheus/prometheus.module';
+import { MetricsModule } from '@modules/metrics/metrics.module';
 import { AppService } from './app.service';
 
 @Module({
@@ -47,6 +50,9 @@ import { AppService } from './app.service';
     ApiModule,
     WebModule,
     TelegramBotModule,
+    PrometheusModule,
+    HealthModule,
+    MetricsModule,
   ],
   providers: [AppService],
 })
