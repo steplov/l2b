@@ -11,7 +11,7 @@ import { HealthService } from './services/health.service';
     getRaidBossReadRepositoryConnection(),
     TerminusModule,
     PrometheusModule,
-    ConfigModule
+    ConfigModule,
   ],
   controllers: [HealthController],
   providers: [HealthService],

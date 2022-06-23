@@ -1,8 +1,4 @@
-import {
-  Controller,
-  Get,
-  ServiceUnavailableException
-} from '@nestjs/common';
+import { Controller, Get, ServiceUnavailableException } from '@nestjs/common';
 import { HealthCheckResult } from '@nestjs/terminus';
 import { routesV1 } from '@configs/app.routes';
 import { HealthService } from '../services/health.service';

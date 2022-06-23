@@ -28,7 +28,7 @@ export class HealthService {
     private readonly mongoose: MongooseHealthIndicator,
     @InjectConnection('l2b')
     private readonly mongodb1: Connection,
-    private readonly config: ConfigService
+    private readonly config: ConfigService,
   ) {
     this.host = this.config.get<string>('host');
 
@@ -38,19 +38,16 @@ export class HealthService {
         this.mongoose,
         this.promClientService,
       ),
-    ];
-  }
-
-  @HealthCheck()
-  public async check(): Promise<HealthCheckResult | undefined> {
-    console.log(`${this.host}${routesV1.web.asterios}?server=asterios`)
-    this.listOfThingsToMonitor.push(
       new WebHealthIndicator(
         this.http,
         `${this.host}${routesV1.web.asterios}?server=asterios`,
         this.promClientService,
       ),
-    );
+    ];
+  }
+
+  @HealthCheck()
+  public async check(): Promise<HealthCheckResult | undefined> {
     return await this.health.check(
       this.listOfThingsToMonitor.map(
         (apiIndicator: HealthIndicator) => async () => {
