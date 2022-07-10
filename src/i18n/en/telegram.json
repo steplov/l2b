@@ -14,7 +14,7 @@
   "COMMAND_DONATE": "Donate",
   "COMMAND_SETTINGS": "Settings",
   "BOSS_WAS_KILLED": "‼️ {server}\n\n<strong>{raidBoss}</strong> was killed",
-  "BOT_RESPAWN_STARTS_IN": "💤 {raidBoss} - respawn in <strong>{startsIn}</strong>",
+  "BOT_RESPAWN_STARTS_IN": "💤 {raidBoss} - respawn starts in <strong>{startsIn}</strong>",
   "BOT_RESPAWN_DURATION": "⏳ {raidBoss} - respawn lasts <strong>{respawnDuration}</strong>",
   "BOSS_WILL_SPAWN_IN": {
     "one": "‼️ {server}\n\n<strong>{raidBoss}</strong> will spawn during next hour",

@@ -11,7 +11,7 @@ export class ParserService {
   parse(page: string): Event[] {
     dayjs.extend(utc);
     dayjs.extend(timezone);
-
+    dayjs.tz.setDefault('Europe/Amsterdam');
     const dom = new JSDOM(page);
 
     const rows = [...dom.window.document.getElementsByTagName('table')];
@@ -28,7 +28,7 @@ export class ParserService {
       const raidBoss = bosses.find(([_, value]) => event.includes(value));
 
       return {
-        date: (dayjs.tz(date, 'Europe/Moscow') as any).$d,
+        date: dayjs.tz(date, 'Europe/Moscow').toDate(),
         event,
         raidBoss: raidBoss ? RaidBoss[raidBoss[0]] : undefined,
       };

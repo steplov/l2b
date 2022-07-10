@@ -14,7 +14,7 @@
   "COMMAND_DONATE": "Підтримка",
   "COMMAND_SETTINGS": "Налаштування",
   "BOSS_WAS_KILLED": "‼️ {server}\n\n<strong>{raidBoss}</strong> був вбитий",
-  "BOT_RESPAWN_STARTS_IN": "💤 {raidBoss} - pеспаун через <strong>{startsIn}</strong>",
+  "BOT_RESPAWN_STARTS_IN": "💤 {raidBoss} - pеспаун почнеться через <strong>{startsIn}</strong>",
   "BOT_RESPAWN_DURATION": "⏳ {raidBoss} - pеспаун триває вже <strong>{respawnDuration}</strong>",
   "BOSS_WILL_SPAWN_IN": {
     "one": "‼️ {server}\n\n<strong>{raidBoss}</strong> з'явиться протягом години",
