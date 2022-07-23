@@ -182,7 +182,7 @@ export class RespawnScene {
 
   private async getInlineRootKeyboard(ctx: Context, project: Project) {
     const keyboard = [
-      ...RespawnScene.getServerButtons(project, 3),
+      ...RespawnScene.getServerButtons(project, 2),
       [await this.getInlineCloseBtn(ctx)],
     ];
 

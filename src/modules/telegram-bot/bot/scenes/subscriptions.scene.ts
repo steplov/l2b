@@ -314,7 +314,7 @@ export class SubscriptionsScene {
 
   private async getInlineKeyboardForServer(ctx, project: Project) {
     const keyboard = [
-      ...SubscriptionsScene.getServerButtons(project, 3),
+      ...SubscriptionsScene.getServerButtons(project, 2),
       [
         await this.getInlineBackButton(ctx, StaticActions.Root),
         await this.getInlineCloseBtn(ctx),

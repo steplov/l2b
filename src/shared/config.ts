@@ -15,7 +15,6 @@ export enum AsteriosServer {
   Medea = 'Medea',
   Asterios = 'Asterios',
   Hunter = 'Hunter',
-  Phoenix = 'Phoenix',
 }
 
 export enum TestServer {

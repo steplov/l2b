@@ -6,7 +6,6 @@ export const asteriosServerRequestMap = {
   medea: AsteriosServer.Medea,
   asterios: AsteriosServer.Asterios,
   hunter: AsteriosServer.Hunter,
-  phoenix: AsteriosServer.Phoenix,
 };
 
 export const asteriosServerResponseMap = objectFlip(asteriosServerRequestMap);

@@ -21,6 +21,5 @@ export class AsteriosRespawnPredictorService extends RespawnPredictorService<Ast
     [AsteriosServer.Medea]: respawnTime,
     [AsteriosServer.Asterios]: respawnTime,
     [AsteriosServer.Hunter]: respawnTime,
-    [AsteriosServer.Phoenix]: respawnTime,
   };
 }
