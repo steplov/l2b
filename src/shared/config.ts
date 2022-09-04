@@ -15,7 +15,17 @@ export enum AsteriosServer {
   Medea = 'Medea',
   Asterios = 'Asterios',
   Hunter = 'Hunter',
+  Pride = 'Pride'
 }
+
+export const serverId: Partial<Record<AsteriosServer, string>> = {
+  [AsteriosServer.Asterios]: '0',
+  [AsteriosServer.Hunter]: '2',
+  [AsteriosServer.Prime]: '3',
+  [AsteriosServer.Medea]: '6',
+  [AsteriosServer.Pride]: '7'
+};
+
 
 export enum TestServer {
   X1 = 'X1',

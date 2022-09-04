@@ -6,7 +6,7 @@ export interface RespawnTime {
   max: number;
 }
 
-type Timings<S extends string> = Record<S, Record<RaidBoss, RespawnTime>>;
+export type Timings<S extends string> = Record<S, Record<RaidBoss, RespawnTime>>;
 
 export abstract class RespawnPredictorService<S extends string> {
   abstract readonly timings: Timings<S>;

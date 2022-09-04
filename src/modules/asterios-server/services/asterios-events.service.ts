@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { map, catchError } from 'rxjs/operators';
-import { AsteriosServer } from '@shared/config';
-import { serverId } from '../enum';
+import { AsteriosServer, serverId } from '@shared/config';
 
 @Injectable()
 export class AsteriosEventsService {

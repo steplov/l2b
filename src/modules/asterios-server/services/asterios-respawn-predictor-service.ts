@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { RespawnPredictorService } from '@shared/services/respawn-predictor-service';
+import { RespawnPredictorService, Timings } from '@shared/services/respawn-predictor-service';
 import { RaidBoss, AsteriosServer } from '@shared/config';
 
 const rbTime = {
@@ -16,10 +16,17 @@ const respawnTime = {
 
 @Injectable()
 export class AsteriosRespawnPredictorService extends RespawnPredictorService<AsteriosServer> {
-  readonly timings = {
-    [AsteriosServer.Prime]: respawnTime,
-    [AsteriosServer.Medea]: respawnTime,
-    [AsteriosServer.Asterios]: respawnTime,
-    [AsteriosServer.Hunter]: respawnTime,
-  };
+  readonly timings: Timings<AsteriosServer>;
+
+  constructor() {
+    super();
+
+    this.timings = {
+      ...Object.values(AsteriosServer).reduce((acc, server) => {
+        acc[server] = respawnTime;
+  
+        return acc;
+      }, {} as Timings<AsteriosServer>)
+    }
+  }
 }
