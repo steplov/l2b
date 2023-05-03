@@ -13,6 +13,7 @@ import { RaidBossesModule } from '@modules/raid-bosses/raid-bosses.module';
 import { HealthModule } from '@modules/health/health.module';
 import { PrometheusModule } from '@modules/prometheus/prometheus.module';
 import { MetricsModule } from '@modules/metrics/metrics.module';
+import { CalculatorModule } from '@modules/calculator/calculator.module';
 import { AppService } from './app.service';
 
 @Module({
@@ -53,6 +54,7 @@ import { AppService } from './app.service';
     PrometheusModule,
     HealthModule,
     MetricsModule,
+    CalculatorModule,
   ],
   providers: [AppService],
 })

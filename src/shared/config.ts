@@ -15,7 +15,7 @@ export enum AsteriosServer {
   Medea = 'Medea',
   Asterios = 'Asterios',
   Hunter = 'Hunter',
-  Pride = 'Pride'
+  Pride = 'Pride',
 }
 
 export const serverId: Partial<Record<AsteriosServer, string>> = {
@@ -23,9 +23,8 @@ export const serverId: Partial<Record<AsteriosServer, string>> = {
   [AsteriosServer.Hunter]: '2',
   [AsteriosServer.Prime]: '3',
   [AsteriosServer.Medea]: '6',
-  [AsteriosServer.Pride]: '7'
+  [AsteriosServer.Pride]: '7',
 };
-
 
 export enum TestServer {
   X1 = 'X1',
@@ -45,3 +44,14 @@ export const raidBossOrder = [
   RaidBoss.Kernon,
   RaidBoss.Golkonda,
 ];
+
+export const calculator = {
+  price: {
+    '25-40': 100,
+    '40-50': 100,
+    '50-60': 150,
+    '60-70': 250,
+    '70-75': 250,
+    '75-76': 100,
+  },
+};

@@ -14,6 +14,7 @@ export const routesV1 = {
     boss: `${apiRoot}/:project/:server/:raidBoss`,
     health: `${apiRoot}/health`,
     metrics: `${apiRoot}/metrics`,
+    calculator: `${apiRoot}/calculator`,
   },
   web: {
     index: webRoot,
@@ -21,5 +22,6 @@ export const routesV1 = {
     notify: `${webRoot}/admin/notify`,
     config: `${webRoot}/admin/config`,
     users: `${webRoot}/admin/users`,
+    calculator: `${webRoot}/calc`,
   },
 };
